@@ -13,7 +13,7 @@ const AccountPage = lazy(() => import('../pages/AccountPage/AccountPage'));
 const ColumnsTasksList = lazy(() => import('../pages/TasksPage/TasksPage'));
 const CalendarPage = lazy(() => import('../pages/CalendarPage/CalendarPage'));
 const ChooseMonth = lazy(() => import('../components/ChooseMonth/ChooseMonth'));
-
+const ChooseDay = lazy(() => import('../components/ChooseDay/ChooseDay'));
 export const App = () => {
   return (
     // <div
@@ -43,15 +43,22 @@ export const App = () => {
               <Route path="/login" element={<LoginPage />} />
               <Route path="/account" element={<AccountPage />} />
               <Route path="/calendar" element={<CalendarPage />}>
-                <Route path="month" element={<ChooseMonth />} />
-                <Route path="day/:currentDay" element={<ColumnsTasksList />} />
+                <Route index element={<Navigate to="/calendar/:years/:month" />}/>
+                <Route path="/calendar/:years/:month" element={<ChooseMonth />} />
+                <Route
+                  path="/calendar/day/:currentDay"
+                  element={<ChooseDay />}
+                />
               </Route>
               <Route path="/users" element={<ColumnsTasksList />} />
             </Route>
             <Route path="" element={<PrivateRoute />}>
               <Route path="/calendar" element={<CalendarPage />}>
-                <Route path="/month" element={<ChooseMonth />} />
-                <Route path="/day/:currentDay" element={<ColumnsTasksList />} />
+                <Route path="/calendar/:month" element={<ChooseMonth />} />
+                <Route
+                  path="/calendar/day/:currentDay"
+                  element={<ChooseDay />}
+                />
               </Route>
             </Route>
           </Routes>
